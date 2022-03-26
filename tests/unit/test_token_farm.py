@@ -54,10 +54,14 @@ def test_issue_tokens(amount_staked):
     account = get_account()
     token_farm, mary_token = test_stake_tokens(amount_staked)
     starting_balance = mary_token.balanceOf(account.address)
+    print(f"Starting balance of MaryToken: {starting_balance}")
     # Act
+    totalValue = token_farm.getUserTotalValueDebug(0)
+    # ~2000 Ether
+    print(f"Total User Value: {totalValue}")
     token_farm.issueTokens({"from": account})
     # Arrange
-    # we are staking 1 dapp_token == in price to 1 ETH
+    # we are staking 1 mary_token == in price to 1 ETH
     # soo... we should get 2,000 dapp tokens in reward
     # since the price of eth is $2,000
     assert (

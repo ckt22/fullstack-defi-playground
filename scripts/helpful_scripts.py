@@ -106,7 +106,7 @@ def deploy_mocks(decimals=DECIMALS, initial_value=INITIAL_PRICE_FEED_VALUE):
     print("Deploying Mocks...")
     account = get_account()
     print("Deploying Mock MARY Token...")
-    initial_supply = Web3.toWei(1000, "ether")
+    initial_supply = Web3.toWei(100000, "ether")
     mary_token = MockMARY.deploy(initial_supply, {"from": account})
     print("Deploying Mock Link Token...")
     # link_token = LinkToken.deploy({"from": account})

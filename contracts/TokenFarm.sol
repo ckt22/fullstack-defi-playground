@@ -12,10 +12,10 @@ contract TokenFarm is Ownable {
     mapping(address => address) public tokenPriceFeedMapping;
     address[] public stakers;
     address[] public allowedTokens;
-    IERC20 public maryCoin;
+    IERC20 public maryToken;
 
-    constructor(address _maryCoinAddress) {
-        maryCoin = IERC20(_maryCoinAddress);
+    constructor(address _maryTokenAddress) {
+        maryToken = IERC20(_maryTokenAddress);
     }
 
     function setPriceFeedContract(address _token, address _priceFeed) public onlyOwner {
@@ -75,7 +75,13 @@ contract TokenFarm is Ownable {
         allowedTokens.push(_token);
     }
 
-    // unstake
+    // function getUserTotalValueDebug(uint256 index) public view returns (uint256) {
+    //     address recipient = stakers[index];
+    //     // send $MARY proactively based on TVL
+    //     uint256 userTotalValue = getUserTotalValue(recipient);
+    //     return userTotalValue;
+    // }
+
     // issue
     function issueTokens() public onlyOwner {
         // Issue tokens to all stakers
@@ -86,8 +92,8 @@ contract TokenFarm is Ownable {
         ) {
             address recipient = stakers[stakersIndex];
             // send $MARY proactively based on TVL
-            uint256 totalValue = getUserTotalValue(recipient);
-            maryCoin.transfer(recipient, totalValue);
+            uint256 userTotalValue = getUserTotalValue(recipient);
+            maryToken.transfer(recipient, userTotalValue);
         }
 
     }
