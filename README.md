@@ -24,3 +24,12 @@ Contract.from_abi("Token", "0x79447c97b6543F6eFBC91613C655977806CB18b0", abi)
 https://eth-brownie.readthedocs.io/en/stable/core-contracts.html
 
 https://stackoverflow.com/questions/71041850/is-there-a-difference-between-casting-to-interface-and-to-a-contract-instance
+
+# Frontend Issue
+
+supportedChain is deprecated, please pass networks instead
+```
+    <DAppProvider config={{
+      networks: [Kovan]
+    }}>
+```

@@ -24,10 +24,13 @@ export const Main = () => {
     const networkName = chainId ? helperConfig[chainId] : "dev";
     const theme = useTheme();
 
+    console.log(networkName);
+    console.log(chainId);
+
     // token addresses
-    const maryTokenAddress = brownieConfig ? brownieConfig["networks"][networkName]["mary_token"] : constants.AddressZero;
-    const wethTokenAddress = brownieConfig ? brownieConfig["networks"][networkName]["weth_token"] : constants.AddressZero;
-    const fauTokenAddress = brownieConfig ? brownieConfig["networks"][networkName]["fau_token"] : constants.AddressZero;
+    const maryTokenAddress = (brownieConfig && chainId) ? brownieConfig["networks"][networkName]["mary_token"] : constants.AddressZero;
+    const wethTokenAddress = (brownieConfig && chainId) ? brownieConfig["networks"][networkName]["weth_token"] : constants.AddressZero;
+    const fauTokenAddress = (brownieConfig && chainId) ? brownieConfig["networks"][networkName]["fau_token"] : constants.AddressZero;
 
     const supportedTokens: Array<Token> = [
         {
@@ -51,9 +54,9 @@ export const Main = () => {
     <>
         <Typography variant="h2" gutterBottom component="div">
             <Box sx={{ 
-                color: theme.palette.common.white,
+                color: theme.palette.common.black,
                 textAlign: "center",
-                padding: theme.spacing(4)}}
+                padding: theme.spacing(2)}}
             >Dapp POC</Box>
         </Typography>
         <YourWallet supportedTokens={supportedTokens} />
