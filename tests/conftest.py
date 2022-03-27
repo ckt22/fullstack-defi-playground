@@ -6,7 +6,7 @@ from brownie import MockERC20
 
 @pytest.fixture
 def amount_staked():
-    return Web3.toWei(1, "ether")
+    return Web3.toWei(0.1, "ether")
 
 @pytest.fixture
 def random_erc20():

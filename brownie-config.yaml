@@ -6,7 +6,7 @@ networks:
     verify: False
   kovan:
     verify: True
-    mary_token: '0xb0b84d572F509dD22BdBb2a867Bb6C7a31261F27'
+    mary_token: '0x2c0C01c6Ac30945A44730214F25D4301713232c4'
     weth_token: '0xd0a1e359811322d97991e03f863a0c30c2cf029c'
     fau_token: '0xFab46E002BbF0b4509813474841E0716E6730136'
     dai_usd_price_feed: '0x777A68032a88E5A84678A77Af2CD65A7b3c0775a'
