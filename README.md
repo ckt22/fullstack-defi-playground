@@ -1,4 +1,6 @@
-# Note
+## Takeaways
+
+# Brownie contract vs interface
 Is there a difference between casting to Interface and to a contract instance?
 Yes!!
 When working in a live environment or forked development network, you can create Contract objects to interact with already-deployed contracts.
