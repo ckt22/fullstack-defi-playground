@@ -33,3 +33,5 @@ supportedChain is deprecated, please pass networks instead
       networks: [Kovan]
     }}>
 ```
+
+The latest @usedapp/core version has some issues. The stable version should be 0.7.0

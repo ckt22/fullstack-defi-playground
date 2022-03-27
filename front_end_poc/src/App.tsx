@@ -9,18 +9,10 @@ import { Provider } from 'wagmi'
 function App() {
   return (
     <Provider>
-      <DAppProvider config={{
-        networks: [Kovan],
-        notifications: {
-          expirationPeriod: 1000,
-          checkInterval: 1000
-        }
-      }}>
-        <Header />
-        <Container maxWidth="md">
-          <Main />
-        </Container>
-      </DAppProvider>
+      <Header />
+      <Container maxWidth="md">
+        <Main />
+      </Container>
     </Provider>
   );
 }

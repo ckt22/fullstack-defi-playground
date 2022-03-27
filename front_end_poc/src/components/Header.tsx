@@ -8,8 +8,6 @@ export const Header = () => {
         account, activateBrowserWallet, deactivate
     } = useEthers();
 
-    const isConnected = !!account;
-
     return(
         <Box
             sx={{
@@ -20,7 +18,7 @@ export const Header = () => {
             gap: 1,
             }}
       >
-        { isConnected ? 
+        { account ? 
             (<Button color="primary" variant="contained" onClick={deactivate}>
                 Disconnect
             </Button>) :
