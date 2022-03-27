@@ -24,9 +24,6 @@ export const Main = () => {
     const networkName = chainId ? helperConfig[chainId] : "dev";
     const theme = useTheme();
 
-    console.log(networkName);
-    console.log(chainId);
-
     // token addresses
     const maryTokenAddress = (brownieConfig && chainId) ? brownieConfig["networks"][networkName]["mary_token"] : constants.AddressZero;
     const wethTokenAddress = (brownieConfig && chainId) ? brownieConfig["networks"][networkName]["weth_token"] : constants.AddressZero;

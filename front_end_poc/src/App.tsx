@@ -4,17 +4,24 @@ import { DAppProvider, Kovan } from '@usedapp/core';
 import { Header } from './components/Header';
 import { Main } from './components/Main';
 import Container from '@mui/material/Container';
+import { Provider } from 'wagmi'
 
 function App() {
   return (
-    <DAppProvider config={{
-      networks: [Kovan]
-    }}>
-      <Header />
-      <Container maxWidth="md">
-        <Main />
-      </Container>
-    </DAppProvider>
+    <Provider>
+      <DAppProvider config={{
+        networks: [Kovan],
+        notifications: {
+          expirationPeriod: 1000,
+          checkInterval: 1000
+        }
+      }}>
+        <Header />
+        <Container maxWidth="md">
+          <Main />
+        </Container>
+      </DAppProvider>
+    </Provider>
   );
 }
 
