@@ -3,10 +3,11 @@ from scripts.helpful_scripts import (
     LOCAL_BLOCKCHAIN_ENVIRONMENTS,
     get_account,
     get_contract,
-    INITIAL_PRICE_FEED_VALUE
+    INITIAL_PRICE_FEED_VALUE,
+    DECIMALS
 )
 from brownie import network, exceptions
-from scripts.deploy import deploy_token_farm
+from scripts.deploy import deploy_token_farm, KEPT_BALANCE
 
 def test_set_price_feed_contract():
     if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
@@ -90,3 +91,40 @@ def test_get_user_total_value_with_different_tokens(amount_staked, random_erc20)
     # Assert
     total_value = token_farm.getUserTotalValue(account.address)
     assert total_value == INITIAL_PRICE_FEED_VALUE * 3
+
+def test_get_token_value():
+    # Arrange
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        pytest.skip("Only for local testing!")
+    token_farm, mary_token = deploy_token_farm()
+    # Act / Assert
+    assert token_farm.getTokenValue(mary_token.address) == (
+        INITIAL_PRICE_FEED_VALUE,
+        DECIMALS,
+    )
+
+def test_unstake_tokens(amount_staked):
+    # Arrange
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        pytest.skip("Only for local testing!")
+    account = get_account()
+    token_farm, mary_token = test_stake_tokens(amount_staked)
+    # Act
+    token_farm.unstakeTokens(mary_token.address, {"from": account})
+    assert mary_token.balanceOf(account.address) == KEPT_BALANCE
+    assert token_farm.stakingBalance(mary_token.address, account.address) == 0
+    assert token_farm.uniqueTokensStaked(account.address) == 0
+
+def test_add_allowed_tokens():
+    # Arrange
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        pytest.skip("Only for local testing!")
+    account = get_account()
+    non_owner = get_account(index=1)
+    token_farm, mary_token = deploy_token_farm()
+    # Act
+    token_farm.addAllowedTokens(mary_token.address, {"from": account})
+    # Assert
+    assert token_farm.allowedTokens(0) == mary_token.address
+    with pytest.raises(exceptions.VirtualMachineError):
+        token_farm.addAllowedTokens(mary_token.address, {"from": non_owner})
