@@ -1,7 +1,6 @@
 
 import { Token } from "../Main";
 import { useEthers, useTokenBalance, useEtherBalance } from "@usedapp/core";
-import { useBalance, useAccount } from 'wagmi';
 import { formatUnits } from "@ethersproject/units";
 import { BalanceMsg } from "../BalanceMsg";
 
