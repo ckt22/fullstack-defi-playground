@@ -7,7 +7,12 @@ import { DAppProvider } from "@usedapp/core";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DAppProvider config={{}}>
+    <DAppProvider config={{
+      notifications: {
+        expirationPeriod: 1000,
+        checkInterval: 1000
+      }
+    }}>
       <App />
     </DAppProvider>
   </React.StrictMode>,
