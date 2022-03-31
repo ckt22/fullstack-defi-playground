@@ -6,19 +6,25 @@ import Tab from '@mui/material/Tab';
 import { TabPanel, TabContext, TabList } from '@mui/lab';
 import { WalletBalance } from './WalletBalance';
 import { StakeForm } from './StakeForm';
+import { useTheme } from '@mui/material/styles';
 
 interface YourWalletProps {
     supportedTokens: Array<Token>
 }
 
 export const YourWallet = ({ supportedTokens }: YourWalletProps) => {
-    const [selectedTokenIndex, setSelectedTokenIndex] = useState<number>(0)
+    const [selectedTokenIndex, setSelectedTokenIndex] = useState<number>(0);
+    const theme = useTheme();
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setSelectedTokenIndex(parseInt(newValue))
     }
     return (
-        <Box>
+        <Box sx={{
+            backgroundColor: "white",
+            borderRadius: "15px",
+            padding: theme.spacing(1)
+        }}>
             <h1> Your Wallet! </h1>
             <Box>
                 <TabContext value={selectedTokenIndex.toString()}>
