@@ -1,6 +1,7 @@
 import { useEthers } from "@usedapp/core";
 import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material/styles';
 
 export const Header = () => {
 
@@ -8,14 +9,15 @@ export const Header = () => {
         account, activateBrowserWallet, deactivate
     } = useEthers();
 
+    const theme = useTheme();
+
     return(
         <Box
             sx={{
             display: 'flex',
             justifyContent: 'flex-end',
-            bgcolor: 'background.paper',
-            padding: 4,
-            gap: 1,
+            padding: theme.spacing(4),
+            gap: theme.spacing(1),
             }}
       >
         { account ? 
