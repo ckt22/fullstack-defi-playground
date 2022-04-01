@@ -8,6 +8,8 @@ import { Button, Input, CircularProgress, Snackbar } from "@mui/material";
 import { useStakeTokens } from "../../hooks";
 import { utils } from "ethers";
 
+import { SliderInput } from "../../components";
+
 interface StakeFormProps {
     token: Token
 }
@@ -27,21 +29,26 @@ export const StakeForm = ({token}: StakeFormProps) => {
         console.log(newAmount)
     }
 
-    const { approveAndStake, state: approveAndStakeErc20State } = useStakeTokens(tokenAddress);
+    const { send: stakeTokensSend, state: stakeTokensState} = useStakeTokens(tokenAddress);
     const handleStakeSubmit = () => {
         const amountAsWei = utils.parseEther(amount.toString());
-        return approveAndStake(amountAsWei.toString());
+        return stakeTokensSend(amountAsWei.toString());
     }
 
+    // token states
+    const hasZeroBalance = formattedTokenBalance === 0;
+    const hasZeroAmountSelected = parseFloat(amount.toString()) === 0;
+
     // pending approve
-    const isMining = approveAndStakeErc20State.status === "Mining";
+    const isMining = stakeTokensState.status === "Mining";
     // alerts
     const [showErc20ApprovalSuccess, setShowErc20ApprovalSuccess] = useState(false);
     const [showStakeTokenSuccess, setShowStakeTokenSuccess] = useState(false);
+    const [showStakeTokensSuccess, setShowStakeTokensSuccess] = useState(false);
 
     const handleCloseSnack = () => {
-        setShowErc20ApprovalSuccess(false)
-        setShowStakeTokenSuccess(false)
+        showErc20ApprovalSuccess && setShowErc20ApprovalSuccess(false)
+        showStakeTokensSuccess && setShowStakeTokensSuccess(false)
     }
 
     useEffect(() => {
@@ -65,32 +72,41 @@ export const StakeForm = ({token}: StakeFormProps) => {
     return (
         <>
             <div>
-                <Input
-                    onChange={handleInputChange} />
+                <SliderInput
+                    label={`Stake ${name}`}
+                    maxValue={formattedTokenBalance}
+                    id={`slider-input-${name}`}
+                    value={amount}
+                    onChange={setAmount}
+                    disabled={isMining || hasZeroBalance}
+                />
                 <Button
-                    onClick={handleStakeSubmit}
                     color="primary"
+                    variant="contained"
                     size="large"
-                    disabled={isMining}>
-                    {isMining ? <CircularProgress size={26} /> : "Stake!!!"}
+                    onClick={handleStakeSubmit}
+                    disabled={isMining || hasZeroAmountSelected}
+                >
+                {isMining ? <CircularProgress size={26} /> : "Stake"}
                 </Button>
             </div>
-            {/* Notifications */}
             <Snackbar
                 open={showErc20ApprovalSuccess}
                 autoHideDuration={5000}
                 onClose={handleCloseSnack}
             >
                 <Alert onClose={handleCloseSnack} severity="success">
-                    ERC-20 token transfer approved! Now approve the 2nd transaction.
+                ERC-20 token transfer approved successfully! Now approve the 2nd tx to
+                initiate the staking transfer.
                 </Alert>
             </Snackbar>
             <Snackbar
-                open={showStakeTokenSuccess}
+                open={showStakeTokensSuccess}
                 autoHideDuration={5000}
-                onClose={handleCloseSnack}>
+                onClose={handleCloseSnack}
+            >
                 <Alert onClose={handleCloseSnack} severity="success">
-                    Tokens Staked!
+                Tokens staked successfully!
                 </Alert>
             </Snackbar>
         </>
