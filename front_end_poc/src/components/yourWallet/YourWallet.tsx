@@ -27,8 +27,13 @@ export const YourWallet = ({ supportedTokens }: YourWalletProps) => {
         }}>
             <h1> Your Wallet! </h1>
             <Box>
-                <TabContext value={selectedTokenIndex.toString()}>
-                    <TabList onChange={handleChange} aria-label="stake form tabs">
+                <TabContext 
+                    value={selectedTokenIndex.toString()}
+                >
+                    <TabList
+                        onChange={handleChange} 
+                        aria-label="stake form tabs"
+                    >
                         {supportedTokens.map((token, index) => {
                             return (
                                 <Tab label={token.name}
@@ -40,10 +45,17 @@ export const YourWallet = ({ supportedTokens }: YourWalletProps) => {
                     {supportedTokens.map((token, index) => {
                         return (
                             <TabPanel value={index.toString()} key={index}>
-                                <div>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        gap: theme.spacing(4)
+                                    }}
+                                >
                                     <WalletBalance token={supportedTokens[selectedTokenIndex]} />
                                     <StakeForm token={supportedTokens[selectedTokenIndex]} />
-                                </div>
+                                </Box>
                             </TabPanel>
                         )
                     })}
