@@ -7,11 +7,12 @@ import json
 import shutil
 import os
 
-KEPT_BALANCE = Web3.toWei(100, "ether")
+KEPT_BALANCE = Web3.toWei(50000, "ether")
 
-def deploy_token_farm(front_end_update=False):
+def deploy_token_farm(front_end_update=True):
     account = get_account()
     mary_token = get_contract("mary_token")
+    print(mary_token.address)
     token_farm = TokenFarm.deploy(
         mary_token.address,
         {"from": account},
@@ -31,6 +32,7 @@ def deploy_token_farm(front_end_update=False):
     }
     add_allowed_tokens(token_farm, dict_of_allowed_tokens, account)
     if front_end_update:
+        print('updating frontend...')
         update_front_end()
     return token_farm, mary_token
 

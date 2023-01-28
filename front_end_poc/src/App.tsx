@@ -1,6 +1,4 @@
-import React from 'react';
 import './App.css';
-import { DAppProvider, Kovan } from '@usedapp/core';
 import { Header } from './features/Header';
 import { Main } from './features/Main';
 import Container from '@mui/material/Container';
